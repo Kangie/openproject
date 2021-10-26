@@ -44,7 +44,10 @@ class ProjectsController < ApplicationController
   include RepositoriesHelper
   include ProjectsHelper
 
-  # Lists visible projects
+  current_menu_item :index do
+    :list_projects
+  end
+
   def index
     query = load_query
 
@@ -58,13 +61,15 @@ class ProjectsController < ApplicationController
     render layout: 'no_menu'
   end
 
-  current_menu_item :index do
-    :list_projects
-  end
-
   def new
     render layout: 'no_menu'
   end
+
+  current_menu_item :show do
+    :settings_general
+  end
+
+  def show; end
 
   def copy; end
 
@@ -76,7 +81,7 @@ class ProjectsController < ApplicationController
 
     if service_call.success?
       flash[:notice] = I18n.t(:notice_successful_update)
-      redirect_to settings_generic_project_path(@project)
+      redirect_to settings_project_path(@project)
     else
       render action: 'identifier'
     end
@@ -147,12 +152,6 @@ class ProjectsController < ApplicationController
     respond_to do |format|
       format.json { render json: projects_level_list_json(projects) }
     end
-  end
-
-  ##
-  # Redirect as action as routes can only redirect by full path
-  def settings
-    redirect_to settings_generic_project_path(@project)
   end
 
   private

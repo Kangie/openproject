@@ -7,7 +7,7 @@ export const PROJECTS_ROUTES:Ng2StateDeclaration[] = [
   {
     name: 'project_settings',
     parent: 'optional_project',
-    url: '/settings/generic/',
+    url: '/settings',
     component: ProjectsComponent,
   },
   {
